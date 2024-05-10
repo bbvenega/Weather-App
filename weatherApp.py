@@ -41,7 +41,6 @@ def selectWeatherOption():
         weatherForecastOptions = [
             '"Forecast" ~ forecast for 12h periods over the next seven days',
             '"forecastHourly" ~ forecast for hourly periods over the next seven days',
-            '"forecastGridData" ~ raw forecast data over the next seven days'
         ]
 
         while True:
@@ -90,9 +89,11 @@ def loadPeriods(weatherForecast):
 def printPeriods(periods):
     
     for period in periods:
-        print(period.name)
-        print(period.temperature, period.temperature_unit)
-
+        print("~" * 40)
+        print(f"\n{period.name.center(40)}")
+        print(f"Temperature: {str(period.temperature)}" + period.temperature_unit + f" | Dewpoint: {str(period.dewpoint)} ")
+        print(f"{str(period.detailed_forecast)}")
+        print("\n")
 if __name__ == "__main__":
     api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
     while True:
@@ -113,8 +114,7 @@ if __name__ == "__main__":
                 
                 officeOptions = [
                 officeForecast['properties']['forecast'],
-                officeForecast['properties']['forecastHourly'],
-                officeForecast['properties']['forecastGridData']
+                officeForecast['properties']['forecastHourly']
                 ]
 
                 if officeResponse.status_code == 200:
@@ -128,8 +128,11 @@ if __name__ == "__main__":
 
                     if weatherResponse.status_code == 200:
                         weatherForecast = weatherResponse.json()
+                        json_string = json.dumps(weatherForecast, indent = 4)
+                        print(json_string)
                         periods = loadPeriods(weatherForecast)
                         printPeriods(periods)
+
                         
             
                     else: 
