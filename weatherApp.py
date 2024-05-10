@@ -19,60 +19,65 @@ def get_location_options(address, api_key):
         print('Error: ', data['status'])
         return None, None
     
-
-if __name__ == "__main__":
-    
-    address = input("Please enter your address: ")
-
-    api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
-
-    lat,lng = get_location_options(address, api_key)
-
-
-if lat is not None and lng is not None: 
-    print(f'Latitiude: {lat}, Longitutde: {lng}')
-
-    officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
-    
-    officeResponse = requests.get(officeUrl)
-
-    if officeResponse.status_code == 200:
-
-        officeForecast = officeResponse.json()
-        json_string = json.dumps(officeForecast, indent=4)
-        print(json_string)
-
-
-        
-
-        officeOptions = [
-            officeForecast['properties']['forecast'],
-            officeForecast['properties']['forecastHourly'],
-            officeForecast['properties']['forecastGridData']
+def selectWeatherOption():
+        weatherForecastOptions = [
+            '"Forecast" ~ forecast for 12h periods over the next seven days',
+            '"forecastHourly" ~ forecast for hourly periods over the next seven days',
+            '"forecastGridData" ~ raw forecast data over the next seven days'
         ]
 
         counter = 1
-        for element in officeOptions:
+        for element in weatherForecastOptions:
          print(counter, element)
          counter += 1
-
+    
         user_input = input("Which would you like to see? : ")
-        selectedWeatherService = int(user_input)
-        weatherUrl = officeOptions[selectedWeatherService - 1]
+        return  int(user_input)
 
-        weatherResponse = requests.get(weatherUrl)
+if __name__ == "__main__":
+    api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
+    while True:
+        address = input("Please enter your address: ")
+        lat,lng = get_location_options(address, api_key)
 
-        if(weatherResponse.status_code == 200):
 
-            weatherForecast = weatherResponse.json()
-            json_weather = json.dumps(weatherForecast, indent = 4)
-            print(json_weather)
+        if lat is not None and lng is not None: 
+            print(f'Latitiude: {lat}, Longitutde: {lng}')
+
+            officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
+    
+            officeResponse = requests.get(officeUrl)
+            officeForecast = officeResponse.json()
+            
+            officeOptions = [
+            officeForecast['properties']['forecast'],
+            officeForecast['properties']['forecastHourly'],
+            officeForecast['properties']['forecastGridData']
+            ]
+
+            if officeResponse.status_code == 200:
+                officeForecast = officeResponse.json()
+                weatherOption = selectWeatherOption()
+                weatherUrl = officeOptions[weatherOption - 1]
+
         
-        else: 
-            print(f"Error: Not a valid choice")
 
-    else: 
-        print(f"Error: Unable to fetch office forecase. Status code : {officeResponse.status_code}")
+                weatherResponse = requests.get(weatherUrl)
+
+                if weatherResponse.status_code == 200:
+                    weatherForecast = weatherResponse.json()
+                    json_weather = json.dumps(weatherForecast, indent = 4)
+                    print(json_weather)
+        
+                else: 
+                    print(f"Error: Not a valid choice")
+
+            else: 
+                print(f"Error: Unable to fetch office forecast. Status code : {officeResponse.status_code}")
+        else:
+            print("Error: Unable to fetch location coordinates.")
     
-    
+        countinue_or_exit = input("Do you want to continue? (y/n): ")
+        if countinue_or_exit != "y":
+            break
     
