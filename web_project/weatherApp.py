@@ -37,7 +37,7 @@ def get_location_options(address, api_key):
         print('Error: ', data['status'])
         return None, None
     
-def selectWeatherOption():
+def selectWeatherOption(forecastType):
         weatherForecastOptions = [
             '"Forecast" ~ forecast for 12h periods over the next seven days',
             '"forecastHourly" ~ forecast for hourly periods over the next seven days',
@@ -46,19 +46,27 @@ def selectWeatherOption():
         while True:
 
             counter = 1
-            for element in weatherForecastOptions:
-                print(counter, element)
-                counter += 1
+            # for element in weatherForecastOptions:
+            #     print(counter, element)
+            #     counter += 1
+
+            foreCastSelect = 0
+
+            if forecastType == "daily": 
+                foreCastSelect = 1
+            else: 
+                foreCastSelect = 2
+            
             try:
-                user_input = int(input("Which would you like to see? : "))
-                if 1 <= user_input <= len(weatherForecastOptions):
-                    return  int(user_input)
-                else:
-                    print("Error: Please enter a number within the range.")
+                # user_input = int(input("Which would you like to see? : "))
+                
+                return  int(foreCastSelect)
+
             except ValueError:
                 print("Error: Please enter a valid integer")       
 
 
+    
 def loadPeriods(weatherForecast):
    
 
@@ -94,12 +102,10 @@ def printPeriods(periods):
         print(f"Temperature: {str(period.temperature)}" + period.temperature_unit + f" | Dewpoint: {str(period.dewpoint)} ")
         print(f"{str(period.detailed_forecast)}")
         print("\n")
-if __name__ == "__main__":
+def main(address, forecastType):
     api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
     while True:
-        address = input("Please enter your address (EXIT to terminate): ")
-        if address.lower() == "exit":
-            break
+
 
         lat,lng = get_location_options(address, api_key)
 
@@ -119,7 +125,7 @@ if __name__ == "__main__":
 
                 if officeResponse.status_code == 200:
                     officeForecast = officeResponse.json()
-                    weatherOption = selectWeatherOption()
+                    weatherOption = selectWeatherOption(forecastType)
                     weatherUrl = officeOptions[weatherOption - 1]
 
             
@@ -132,6 +138,7 @@ if __name__ == "__main__":
                         print(json_string)
                         periods = loadPeriods(weatherForecast)
                         printPeriods(periods)
+                        return periods
 
                         
             
@@ -146,5 +153,9 @@ if __name__ == "__main__":
             countinue_or_exit = input("Do you want to continue with the address: {address} (y/n): ")
             if countinue_or_exit != "y":
                  break
-        
+
+if __name__ == "__main__":
+    address = input("Please enter your address (EXIT to terminate): ")
+    if address.lower() != "exit":
+        main(address) 
         
