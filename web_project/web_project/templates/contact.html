@@ -1,0 +1,20 @@
+{% extends 'base.html'%}
+
+{% block title %} Home {% endblock %}
+
+{%block content%}
+<h1>
+   <ul>
+      {%for period in weather_forecast%}
+      <li>
+         <strong>{{period.name}} </strong> <br>
+         Temperature: {{ period.temperature }} {{ period.temperature_unit }}<br>
+         Dewpoint: {{ period.dewpoint }}<br>
+         Humidity: {{ period.humidity }}<br>
+         Wind Speed: {{ period.wind_speed }}<br>
+         Wind Direction: {{ period.wind_direction }}<br>
+      </li>
+      {%endfor%}
+   </ul>
+</h1>
+{%endblock%}

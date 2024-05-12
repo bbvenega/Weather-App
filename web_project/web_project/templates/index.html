@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+</head>
+<body>
+    <h1>Welcome to the Weather App</h1>
+    <form method="post" action="{% url 'weather_result' %}">
+        {% csrf_token %}
+        <label for="address">Enter your address:</label>
+        <input type="text" id="address" name="address">
+        <label for="forecast-type">Select forecast type:</label>
+        <select id="forecast-type" name="forecast_type">
+            <option value="hourly">Hourly</option>
+            <option value="daily">Daily</option>
+        </select><br><br>
+        <button type="submit">Get Weather</button>
+    </form>
+</body>
+</html>
