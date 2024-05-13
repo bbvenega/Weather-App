@@ -13,14 +13,9 @@ def weather_result(request):
         forecast_type = request.POST.get('forecast_type')
         if address and forecast_type: 
             periods = main(address, forecast_type)
-            return render(request, 'weather_result.html', {'periods': periods})
+            return render(request, 'weather_result.html', {'periods': periods, 'address': address})
         else:
             return HttpResponse('Please provide an address.')
     else:
         return HttpResponse('Method not allowed')
         
-def about(request):
-    return render(request, 'about.html')
-def contact(request):
-    return render(request, 'contact.html')
-

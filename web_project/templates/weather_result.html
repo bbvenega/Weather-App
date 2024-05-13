@@ -1,27 +1,38 @@
-{%extends 'base.html'%}
+{% extends 'base.html' %}
 {% block title %}
-    Weather Result
+    Weather Results
+{% endblock %}
+
+{% block body_class %}
+    {% if periods.0.is_daytime %}
+        dayTime
+    {% else %}
+        nightTime
+    {% endif %}
 {% endblock %}
 
 {% block content %}
-<body>
-    <h1 class = "header"> Weather Results</h1>
-    <div class="container">
-    <table>
-        <tr>
-            <th>Period</th>
-            <th>Temperature</th>
-            <th>Detailed Forecast</th>
-        </tr>
-        {% for period in periods %}
-        
-        <tr>
-            <td>{{ period.name }}</td>
-            <td>{{ period.temperature }}</td>
-            <td>{{ period.detailed_forecast }}</td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-</body>
+    <h1 class="header">Weather Results</h1>
+    <h2 class="header2">{{ periods.0.location }}</h2>
+    <h3 class="header3">{{ periods.0.name }}</h3>
+    <h4 class="header4">{{ periods.0.temperature }} {{ periods.0.temperature_unit }}</h4>
+    <h5 class="header5">{{ periods.0.detailed_forecast }}</h5>
+    <div class="table-container">
+        <table>
+            <tr>
+                <th>Period</th>
+                <th>Temperature</th>
+                <th>Detailed Forecast</th>
+            </tr>
+            {% for period in periods %}
+                {% if not forloop.first %}
+                    <tr>
+                        <td>{{ period.name }}</td>
+                        <td>{{ period.temperature }} {{ period.temperature_unit }}</td>
+                        <td>{{ period.detailed_forecast }}</td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </table>
+    </div>
 {% endblock %}
