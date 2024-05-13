@@ -1,0 +1,27 @@
+{%extends 'base.html'%}
+{% block title %}
+    Weather Result
+{% endblock %}
+
+{% block content %}
+<body>
+    <h1 class = "header"> Weather Results</h1>
+    <div class="container">
+    <table>
+        <tr>
+            <th>Period</th>
+            <th>Temperature</th>
+            <th>Detailed Forecast</th>
+        </tr>
+        {% for period in periods %}
+        
+        <tr>
+            <td>{{ period.name }}</td>
+            <td>{{ period.temperature }}</td>
+            <td>{{ period.detailed_forecast }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+</body>
+{% endblock %}
