@@ -2,7 +2,8 @@ import requests
 import json
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, detailed_forecast):
+    def __init__(self, number, name, start_time, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, detailed_forecast, location):
+        
         self.number = number
         self.name = name
         self.start_time = start_time
@@ -17,12 +18,14 @@ class WeatherPeriod:
         self.icon_url = icon_url
         self.short_forecast = short_forecast
         self.detailed_forecast = detailed_forecast
+        self.location = location
+        
 
 
 def get_location_options(address, api_key):
-
+   
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}'
-
+    
     response = requests.get(url)
     data = response.json()
 
@@ -37,6 +40,15 @@ def get_location_options(address, api_key):
         print('Error: ', data['status'])
         return None, None
     
+def convertToCity(lat,lng, locationAPI):   
+        locationURL = f'http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lng}&appid={locationAPI}'
+        locationResponse = requests.get(locationURL)
+        cityJson = locationResponse.json()
+
+        if json.dumps(cityJson[0]["state"]) != "":
+            return json.dumps(cityJson[0]["name"]) +", " + json.dumps(cityJson[0]["state"])
+        else:
+            return json.dumps(cityJson[0]["name"]) +", " + json.dumps(cityJson[0]["country"])
 def selectWeatherOption(forecastType):
         weatherForecastOptions = [
             '"Forecast" ~ forecast for 12h periods over the next seven days',
@@ -67,7 +79,7 @@ def selectWeatherOption(forecastType):
 
 
     
-def loadPeriods(weatherForecast):
+def loadPeriods(weatherForecast, location):
    
 
 
@@ -87,8 +99,11 @@ def loadPeriods(weatherForecast):
             currPeriod["windDirection"],
             currPeriod["icon"],
             currPeriod["shortForecast"],
-            currPeriod["detailedForecast"]
+            currPeriod["detailedForecast"],
+            location
         )
+        
+        
 
         periods.append(period)
     
@@ -99,11 +114,13 @@ def printPeriods(periods):
     for period in periods:
         print("~" * 40)
         print(f"\n{period.name.center(40)}")
-        print(f"Temperature: {str(period.temperature)}" + period.temperature_unit + f" | Dewpoint: {str(period.dewpoint)} ")
+        print(f"Temperature: C" + period.temperature_unit + f" | Dewpoint: {str(period.dewpoint)} ")
         print(f"{str(period.detailed_forecast)}")
         print("\n")
+        print(f"Daytime or not: " + f"str{period.is_daytime}")
 def main(address, forecastType):
     api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
+    locationAPI = 'f450fc239c378750d6a35407f853899c'
     while True:
 
 
@@ -136,7 +153,10 @@ def main(address, forecastType):
                         weatherForecast = weatherResponse.json()
                         json_string = json.dumps(weatherForecast, indent = 4)
                         print(json_string)
-                        periods = loadPeriods(weatherForecast)
+                        location = convertToCity(lat, lng, locationAPI)
+                        print(location)
+                        periods = loadPeriods(weatherForecast, location)
+
                         printPeriods(periods)
                         return periods
 
