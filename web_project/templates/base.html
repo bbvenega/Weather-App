@@ -1,14 +1,22 @@
 {% load static %}
 <!DOCTYPE html>
 <html>
+  
 <head>
   <title>{% block title %}{% endblock %}</title>
   <link rel="stylesheet" href="{% static 'style.css' %}">  
 </head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <body class="{% block body_class %}{% endblock %}">
+  
 
 {% block content %}
 {% endblock %}
 
+{%block javascript %}
+
+<script src = "{% static 'js/collapsibleDataTable.js'%}" ></script>
+
+{%endblock%}
 </body>
 </html>
