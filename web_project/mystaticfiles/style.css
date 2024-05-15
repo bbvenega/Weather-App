@@ -165,6 +165,7 @@ select {
   text-align: center;
  margin-top: 345px;
  margin-bottom: 0px;
+ 
  max-width: 100%;
  width: auto;
 }
@@ -172,13 +173,15 @@ select {
 
 
 .table-container {
-  position: fixed;
-  top: 430px;
+  max-width: 100vh;
+  position: absolute;
   display: flex;
   width: 100%; /* Take up the full width of the container */
   justify-content: center; /* Center the table horizontally */
   vertical-align: middle;
   text-align: center;
+  top: 0;
+  margin-top: 500px;
 }
 
 table, tr, td, th {
@@ -200,30 +203,46 @@ tr {
 
 .dayTime {
 
+  min-height: 100vh;
+  min-width: 100vw;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  background-size: cover;
+  background-attachment: scroll;
 }
 
 .nightTime {
+  min-height: 100vh;
+  min-width: 100vw;
   background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  background-size: cover;
+  background-attachment: scroll;
   color: beige;
 
 }
 
 html, body {
   display: flex;
-  height: 100%;
-  width: 100%;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  background-size: cover;
+  background-attachment: scroll;
   animation: gradientAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
     font-family: "Poetsen One";
-
+    height: 100%;
     margin: 0;
     padding: 0;
+    overflow: auto; /* Enable scrolling if content exceeds viewport */
     justify-content: center;
     align-items: center;
 
     /* background-color: pink; */
 
 } 
+
+body {
+  background-image: url('your-background-image.jpg');
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}

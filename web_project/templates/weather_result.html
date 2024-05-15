@@ -9,17 +9,17 @@
     {% else %}
         nightTime
     {% endif %}
-{% endblock %}
-
+    {% endblock %}
 {% block content %}
     {% comment %} <h1 class="header1">Weather Results</h1> {% endcomment %}
     <h2 class="header1">{{ periods.0.location }}</h2>
     <h3 class="header3">{{ periods.0.name }}</h3>
     <h4 class="header4">{{ periods.0.temperature }} {{ periods.0.temperature_unit }}</h4>
     <h5 class="header5">{{ periods.0.detailed_forecast }}</h5>
+      
     <div class="table-container">
 
-          
+
 
         <table border="0">
 
@@ -42,7 +42,9 @@
                 {% endif %}
             {% endfor %} 
         </table>
+
     </div>
 </div>
+
 {% endblock %}
 
