@@ -1,16 +1,24 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
 
 @keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+  0% {
+    opacity:0;
+transform: scale(100%);
+}
+16.66% {
+    opacity:1
+}
+33.33% {
+    opacity:1
+}
+48.66% {
+    opacity:1
+}
+100% {
+    opacity:1; 
+transform: scale(100%);
+}
+
 }
 
 .container {
@@ -40,7 +48,7 @@ button {
 
 input[type=text] {
     font-family: "Poetsen One";
-   
+   text-align: center;
     width: 50%;
   box-sizing: border-box;
   border: 2px solid #ccc;
@@ -110,105 +118,151 @@ select {
 
 
 
-  .header {
+  .header1 {
     position: absolute;
-    top: 0%;
+    top: 0px;
     text-align: center;
-    padding: 10px;
-    width:auto;
+   margin-top: 10px;
+   margin-bottom: 0px;
+   max-width: 100%;
+   width: auto;
  
 }
 
 .header2 {
   position: absolute;
-  top: 10%;
+  top: 0px;
   text-align: center;
-  width:auto;
-  padding: 5px;
-  font-weight: 400;
+ margin-top: 120px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
 }
 
 .header3 {
   position: absolute;
-  top: 15%;
+  top: 0px;
   text-align: center;
-  width:auto;
-  padding: 5px;
-  font-weight: 400;
+ margin-top: 180px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
 }
 .header4 {
   position: absolute;
-  
-  padding: 5px;
-  top: 15%;
+  top: 0px;
   text-align: center;
-  width:auto;
-  font-weight: 600;
-  font-size: 100px;
+ margin-top: 225px;
+ font-size: 95px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
 }
 
 .header5 {
-  top: 35%;
-  padding: 5px;
-  /* margin: 100%; */
-  position:absolute;
+  position: absolute;
+  top: 0px;
   text-align: center;
-  width:auto;
-  font-weight: 300;
-  font-size: 20px;
+ margin-top: 345px;
+ margin-bottom: 0px;
+
+ max-width: 100%;
+ width: auto;
 }
 
 
+table.tableHeaderVert {
+
+  color: pink;
+  overflow: scroll;
+  display: contents;
+  width: 50vh;
+  position: absolute;
+  margin: 0;
+  margin-top: 25vh;
+}
+
 
 .table-container {
-  position: fixed;
-  top: 50%;
+  max-width: 100vh;
+  position: absolute;
   display: flex;
   width: 100%; /* Take up the full width of the container */
   justify-content: center; /* Center the table horizontally */
   vertical-align: middle;
+  text-align: center;
+  top: 0;
+  margin-top: 550px;
 }
 
-table {
-  text-align: center; /* Center the content horizontally */
-  font-size: 15px;
-  table-layout: fixed;
-  width: 100%; /* Take up the full width of the container */
-  /* border-collapse: collapse; */
+table, tr, td, th {
+  /* font-size: smaller; */
+  /* border: 1px solid black; */
+  /* border-collapse:collapse; */
+  text-align: center;
+}
+tr.header {
+  cursor:pointer;
+  display: table-row;
+}
+tr {
+  display: none;
 }
 
-th, td {
-  padding: 5px;
+tr.headerVert {
+  font-size: large;
+  /* font-size: 10px; */
+  /* padding: 5px; */
+  width: 100%;
+  display: table-row;
+  overflow: scroll;
 }
+
+
+
 
 .dayTime {
+
+  min-height: 100vh;
+  min-width: 100vw;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  background-size: cover;
+  background-attachment: scroll;
 }
 
 .nightTime {
-  background-image: linear-gradient(to bottom, #3c4980, #1b69) ; 
-  color: white;
+  min-height: 100vh;
+  min-width: 100vw;
+  background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  background-size: cover;
+  background-attachment: scroll;
+  color: beige;
+
 }
 
 html, body {
+  display: flex;
+  background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  background-size: cover;
+  background-attachment: scroll;
+  animation: gradientAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
     font-family: "Poetsen One";
-    display: flex;
     height: 100%;
-    width: 100%;
     margin: 0;
     padding: 0;
+    overflow: auto; /* Enable scrolling if content exceeds viewport */
     justify-content: center;
     align-items: center;
+
     /* background-color: pink; */
-     background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
-    animation: gradientAnimation 10s infinite linear;
+
 } 
 
-
-
-
-
-
-
+body {
+  background-image: url('your-background-image.jpg');
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}

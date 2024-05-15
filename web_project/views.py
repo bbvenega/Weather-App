@@ -13,7 +13,8 @@ def weather_result(request):
         forecast_type = request.POST.get('forecast_type')
         if address and forecast_type: 
             periods = main(address, forecast_type)
-            return render(request, 'weather_result.html', {'periods': periods, 'address': address})
+            hourlyPeriods = main(address, 2)
+            return render(request, 'weather_result.html', {'periods': periods, 'address': address, 'hourlyPeriods': hourlyPeriods})
         else:
             return HttpResponse('Please provide an address.')
     else:

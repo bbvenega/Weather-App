@@ -1,16 +1,24 @@
-
 @import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
 
 @keyframes gradientAnimation {
-    0% {
-        background-position: 0% 50%;
-    }
-    50% {
-        background-position: 100% 50%;
-    }
-    100% {
-        background-position: 0% 50%;
-    }
+  0% {
+    opacity:0;
+transform: scale(100%);
+}
+16.66% {
+    opacity:1
+}
+33.33% {
+    opacity:1
+}
+48.66% {
+    opacity:1
+}
+100% {
+    opacity:1; 
+transform: scale(100%);
+}
+
 }
 
 .container {
@@ -22,6 +30,10 @@
 
 .container form {
     margin-top: 20px;
+}
+
+.centered-text {
+  text-align: center;
 }
 
 label, input, select {
@@ -36,7 +48,7 @@ button {
 
 input[type=text] {
     font-family: "Poetsen One";
-   
+   text-align: center;
     width: 50%;
   box-sizing: border-box;
   border: 2px solid #ccc;
@@ -106,63 +118,112 @@ select {
 
 
 
-  .header {
-    color: green;
-    position: relative;
-    top: 0;
-    font-size: smaller;
-    text-align: left;
-    margin-top: 0; /* Adjust as needed */
-    width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-    align-self: flex-start; /* This will override the align-items: center */
-    align-content: flex-start;
+  .header1 {
+    position: absolute;
+    top: 0px;
+    text-align: center;
+   margin-top: 10px;
+   margin-bottom: 0px;
+   max-width: 100%;
+   width: auto;
+ 
+}
+
+.header2 {
+  position: absolute;
+  top: 0px;
+  text-align: center;
+ margin-top: 120px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
+}
+
+.header3 {
+  position: absolute;
+  top: 0px;
+  text-align: center;
+ margin-top: 180px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
+}
+.header4 {
+  position: absolute;
+  top: 0px;
+  text-align: center;
+ margin-top: 225px;
+ font-size: 95px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
+}
+
+.header5 {
+  position: absolute;
+  top: 0px;
+  text-align: center;
+ margin-top: 345px;
+ margin-bottom: 0px;
+ max-width: 100%;
+ width: auto;
 }
 
 
 
-.table-container{
-  color: purple;
+.table-container {
+  position: fixed;
+  top: 430px;
   display: flex;
-  justify-content: flex-end; /* Align the table horizontally in the center */
-  margin-top: auto; /* Push the container to the bottom */
-}
-  table {
-    text-align: center; /* Center the content horizontally */
-    font-size: 20px;
-    /* font-family: "Poetsen One"; */
-    table-layout: fixed;
-    width: 50%;
-    /* border-collapse: collapse; */
-    border: 3px double white;
-  }
-
-th,
-td {
-  padding: 5px;
+  width: 100%; /* Take up the full width of the container */
+  justify-content: center; /* Center the table horizontally */
+  vertical-align: middle;
+  text-align: center;
 }
 
+table, tr, td, th {
+  font-size: smaller;
+  /* border: 1px solid black; */
+  border-collapse:collapse;
+  text-align: center;
+}
+tr.header {
+  cursor:pointer;
+  display: table-row;
+}
+tr {
+  display: none;
+}
+
+
+
+
+.dayTime {
+
+  background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+}
+
+.nightTime {
+  background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  color: beige;
+
+}
 
 html, body {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  animation: gradientAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
     font-family: "Poetsen One";
-    display: flex;
-    height: 100vh;
+
     margin: 0;
     padding: 0;
     justify-content: center;
     align-items: center;
-    background-color: pink;
-     /* background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
-      */
-    animation: gradientAnimation 10s infinite linear;
+
+    /* background-color: pink; */
+
 } 
-
-
-
-
-
-
-
