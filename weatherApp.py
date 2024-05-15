@@ -1,12 +1,14 @@
 import requests
 import json
+from datetime import datetime
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, detailed_forecast, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, detailed_forecast, location):
         
         self.number = number
         self.name = name
         self.start_time = start_time
+        self.date = date 
         self.end_time = end_time
         self.is_daytime = is_daytime
         self.temperature = temperature
@@ -77,8 +79,39 @@ def selectWeatherOption(forecastType):
             except ValueError:
                 print("Error: Please enter a valid integer")       
 
-
+def convertToStandardTime(time):
+    # print(time)
+    if time and time.strip():
+        time = time[11:19]
+        try:
+            time_obj = datetime.strptime(time, "%H:%M:%S")
+            formatted_time = time_obj.strftime("%I %p %S")
+            # print("time: ")
+            
+            formatted_time = formatted_time[0:5]
+            if formatted_time[0] == '0':
+                    formatted_time = formatted_time[1:5]
+                    # print(formatted_time)
+            return formatted_time
+            
+        except ValueError as e:
+            print("ValueError:", e)
+            return ""
+    else:
+        return ""
     
+def convertToStandardDate(date):
+    if date and date.strip():
+        date = date[:date.index('T'):]
+        try:
+            date_obj = datetime.strptime(date, "%Y-%m-%d")
+            formatted_date = date_obj.strftime("%A")
+            print(formatted_date)
+            return formatted_date
+        except ValueError:
+            return ""
+    else:
+        return ""
 def loadPeriods(weatherForecast, location):
    
 
@@ -88,7 +121,8 @@ def loadPeriods(weatherForecast, location):
         period = WeatherPeriod(
             currPeriod["number"],
             currPeriod["name"],
-            currPeriod["startTime"],
+            convertToStandardTime(currPeriod["startTime"]),
+            convertToStandardDate(currPeriod["startTime"]),
             currPeriod["endTime"],
             currPeriod["isDaytime"],
             currPeriod["temperature"],
@@ -152,12 +186,16 @@ def main(address, forecastType):
                     if weatherResponse.status_code == 200:
                         weatherForecast = weatherResponse.json()
                         json_string = json.dumps(weatherForecast, indent = 4)
-                        print(json_string)
+                        # print(json_string)
                         location = convertToCity(lat, lng, locationAPI)
-                        print(location)
+                        # if weatherForecast["startTime"]:
+                        #     print(weatherForecast["startTime"])
+                        #     time = convertToStandardTime(weatherForecast["startTime"])
+                        #     date = convertToStandardDate(weatherForecast["startTime"])
+                        # print(location)
                         periods = loadPeriods(weatherForecast, location)
 
-                        printPeriods(periods)
+                        # printPeriods(periods)
                         return periods
 
                         
@@ -177,5 +215,6 @@ def main(address, forecastType):
 if __name__ == "__main__":
     address = input("Please enter your address (EXIT to terminate): ")
     if address.lower() != "exit":
-        main(address) 
+        periods = main(address) 
+        
         

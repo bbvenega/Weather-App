@@ -165,11 +165,22 @@ select {
   text-align: center;
  margin-top: 345px;
  margin-bottom: 0px;
- 
+
  max-width: 100%;
  width: auto;
 }
 
+
+table.tableHeaderVert {
+
+  color: pink;
+  overflow: scroll;
+  display: contents;
+  width: 50vh;
+  position: absolute;
+  margin: 0;
+  margin-top: 25vh;
+}
 
 
 .table-container {
@@ -181,13 +192,13 @@ select {
   vertical-align: middle;
   text-align: center;
   top: 0;
-  margin-top: 500px;
+  margin-top: 550px;
 }
 
 table, tr, td, th {
-  font-size: smaller;
+  /* font-size: smaller; */
   /* border: 1px solid black; */
-  border-collapse:collapse;
+  /* border-collapse:collapse; */
   text-align: center;
 }
 tr.header {
@@ -196,6 +207,15 @@ tr.header {
 }
 tr {
   display: none;
+}
+
+tr.headerVert {
+  font-size: large;
+  /* font-size: 10px; */
+  /* padding: 5px; */
+  width: 100%;
+  display: table-row;
+  overflow: scroll;
 }
 
 
