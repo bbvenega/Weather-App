@@ -1,7 +1,7 @@
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from weatherApp import main
+from web_project.weatherApp import main
 
 
 def index(request):

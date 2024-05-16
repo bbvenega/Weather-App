@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}
     Weather Results
 {% endblock %}
@@ -27,16 +28,17 @@
         <tr class="headerVert">
             {% for period in hourlyPeriods|slice:":25" %}
                 {% if not forloop.first %}
-                <td>{{ period.temperature }} {{period.temperature_unit}} </td>
-                    
+                {% comment %} <td>{{ period.temperature }} {{period.temperature_unit}} </td> {% endcomment %}
+                <td> {{period.short_forecast}} </td>
                 {% endif %}
             {% endfor %}
         </tr>
 
         <tr class = "headerVert">
+            {% comment %} <td><img src="{% static 'images/weather-icons/cloudy.png' %}" alt="Weather Icon"></td> {% endcomment %}
             {% for period in hourlyPeriods|slice:":25" %}
             {% if not forloop.first %}
-            <td><img src="{{ period.icon_url }}" alt="Weather Icon"> </td>
+            <td><img src="{% static period.icon_url %}" alt="Weather Icon"></td>
             {% endif %}
         {% endfor %}
 
@@ -45,7 +47,8 @@
             <tr class = "headerVert">
                 {% for period in hourlyPeriods|slice:":25" %}
                 {% if not forloop.first %}
-                <td>{{ period.start_time }}</td>
+                {% comment %} <td>{{ period.start_time }}</td> {% endcomment %}
+               <td> {{periods.0.is_daytime}} </td>
                 {% endif %}
             {% endfor %}
             </tr>

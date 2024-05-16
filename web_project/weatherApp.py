@@ -1,9 +1,10 @@
 import requests
 import json
+import re
 from datetime import datetime
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, detailed_forecast, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
         
         self.number = number
         self.name = name
@@ -19,11 +20,99 @@ class WeatherPeriod:
         self.wind_direction = wind_direction
         self.icon_url = icon_url
         self.short_forecast = short_forecast
+        self.short_description = short_description
         self.detailed_forecast = detailed_forecast
         self.location = location
+
+def createShortDescriptions(short_forecast):
+    weather_keywords = {
+        "Sunny",
+        "Clear",
+        "Mostly Clear",
+        "Partly Cloudy",
+        "Mostly Cloudy",
+        "Cloudy",
+        "Drizzle",
+        "Rain",
+        "Showers",
+        "Thunderstorms",
+        "Snow",
+        "Wintry Mix",
+        "Fog",
+        "Mist",
+        "Haze",
+        "Patchy",
+        "Overcast"
+    }
         
+    short_forecast = short_forecast.lower()
+    keywords_found = []
+    for keyword in weather_keywords:
+            if keyword.lower() in short_forecast:
+                keywords_found.append(keyword)
+    
+    return ', '.join(keywords_found)
+    
+forecast_iconsDay = {
+    "Sunny": "images/weather-icons/sun.png",
+    "Clear": "images/weather-icons/sun.png",
+    "Mostly Sunny": "images/weather-icons/day-cloudy.png",
+    "Partly Cloudy": "images/weather-icons/day-cloudy.png",
+    "Mostly Cloudy": "images/weather-icons/cloudy.png",
+    "Cloudy": "images/weather-icons/cloudy.png",
+    "Foggy": "images/weather-icons/fog.png",
+    "Light Rain": "images/weather-icons/day-rain.png",
+    "Showers": "images/weather-icons/showers.png",
+    "Thunderstorms": "images/weather-icons/day - storm.png",
+    "Windy": "images/weather-icons/windy.png",
+    "Snow": "images/weather-icons/day snow.png",
+    "Wintry Mix": "images/weather-icons/wintry-mix.png",
+    "Drizzle": "images/weather-icons/light-rain.png",
+    "Patchy Fog": "images/weather-icons/day-fog.png",
+    "Hazy": "images/weather-icons/hazy.png"
+}
 
+forecast_iconsNight = {
+    "Sunny": "images/weather-icons/night.png",
+    "Clear": "images/weather-icons/night.png",
+    "Mostly Sunny": "images/weather-icons/night-cloudy.png",
+    "Partly Cloudy": "images/weather-icons/night-cloudy.png",
+    "Mostly Cloudy": "images/weather-icons/cloudy.png",
+    "Cloudy": "images/weather-icons/cloudy.png",
+    "Foggy": "images/weather-icons/fog.png",
+    "Light Rain": "images/weather-icons/night-rain.png",
+    "Showers": "images/weather-icons/showers.png",
+    "Thunderstorms": "images/weather-icons/night-storm.png",
+    "Windy": "images/weather-icons/windy.png",
+    "Snow": "images/weather-icons/night-snow.png",
+    "Wintry Mix": "images/weather-icons/wintry-mix.png",
+    "Drizzle": "images/weather-icons/light-rain.png",
+    "Patchy Fog": "images/weather-icons/night-fog.png",
+    "Hazy": "images/weather-icons/hazy.png"
+}
+def iconDecider(shortDescription, isDayTime):
+    if isDayTime: 
+        forecast_icons = forecast_iconsDay
+        print("It is day time!")
+    else: 
+        forecast_icons = forecast_iconsNight
+        print("It is Night time!")
 
+    if shortDescription in forecast_icons:
+        return forecast_icons[shortDescription]
+    else:
+        keywords = []
+        for keyword in forecast_icons.keys():
+            if keyword.lower() in shortDescription.lower():
+                keywords.append(keyword)
+
+        closest_match = max(keywords, key = lambda x: len(x)) #returns length of input
+        if closest_match:
+            icon_filename = forecast_icons[closest_match]
+            print("Closest match found:", closest_match)
+            print("Displaying icon:", icon_filename)
+        else:
+            print("Did not find any matching icons!", shortDescription)
 def get_location_options(address, api_key):
    
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}'
@@ -106,7 +195,7 @@ def convertToStandardDate(date):
         try:
             date_obj = datetime.strptime(date, "%Y-%m-%d")
             formatted_date = date_obj.strftime("%A")
-            print(formatted_date)
+            # print(formatted_date)
             return formatted_date
         except ValueError:
             return ""
@@ -131,8 +220,10 @@ def loadPeriods(weatherForecast, location):
             currPeriod["relativeHumidity"]["value"],
             currPeriod["windSpeed"],
             currPeriod["windDirection"],
-            currPeriod["icon"],
+            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"]),
+            # currPeriod["icon"],
             currPeriod["shortForecast"],
+            createShortDescriptions(currPeriod["shortForecast"]),
             currPeriod["detailedForecast"],
             location
         )

@@ -240,6 +240,11 @@ tr.headerVert {
 
 }
 
+img{
+  max-width: 50%;
+  max-height: 50%;
+}
+
 html, body {
   display: flex;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
