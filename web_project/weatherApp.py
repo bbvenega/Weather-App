@@ -93,12 +93,13 @@ forecast_iconsNight = {
 def iconDecider(shortDescription, isDayTime):
     if isDayTime: 
         forecast_icons = forecast_iconsDay
-        print("It is day time!")
+        # print("It is day time!")
     else: 
         forecast_icons = forecast_iconsNight
-        print("It is Night time!")
+        # print("It is Night time!")
 
     if shortDescription in forecast_icons:
+        # print("Displaying icon:", forecast_icons[shortDescription])
         return forecast_icons[shortDescription]
     else:
         keywords = []
@@ -109,8 +110,9 @@ def iconDecider(shortDescription, isDayTime):
         closest_match = max(keywords, key = lambda x: len(x)) #returns length of input
         if closest_match:
             icon_filename = forecast_icons[closest_match]
-            print("Closest match found:", closest_match)
-            print("Displaying icon:", icon_filename)
+            # print("Closest match found:", closest_match)
+            # print("Displaying icon:", icon_filename)
+            return forecast_icons[closest_match]
         else:
             print("Did not find any matching icons!", shortDescription)
 def get_location_options(address, api_key):
