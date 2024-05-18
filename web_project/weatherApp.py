@@ -3,6 +3,9 @@ import json
 import re
 from datetime import datetime
 
+
+# The class below contains all the information needed per period loaded in by the National Weather Services API, Google Geolcation API, and a Coordinate to Location API
+
 class WeatherPeriod:
     def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
         
@@ -24,7 +27,10 @@ class WeatherPeriod:
         self.detailed_forecast = detailed_forecast
         self.location = location
 
+#The function below reads in the NWS short description and shortens it further to match to most significant keywords
 def createShortDescriptions(short_forecast):
+
+    #Most common, applicable weather conditions:
     weather_keywords = {
         "Sunny",
         "Clear",
@@ -45,6 +51,7 @@ def createShortDescriptions(short_forecast):
         "Overcast"
     }
         
+    #Converts the NWS forecast into lowercase, and searches for all keywords listed above in the description.
     short_forecast = short_forecast.lower()
     keywords_found = []
     for keyword in weather_keywords:
@@ -53,6 +60,7 @@ def createShortDescriptions(short_forecast):
     
     return ', '.join(keywords_found)
     
+#The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
 forecast_iconsDay = {
     "Sunny": "images/weather-icons/sun.png",
     "Clear": "images/weather-icons/sun.png",
@@ -72,6 +80,7 @@ forecast_iconsDay = {
     "Hazy": "images/weather-icons/hazy.png"
 }
 
+#The map below contains the same keywords above, and connects them to corresponding weather icons (NIGHTTIME)
 forecast_iconsNight = {
     "Sunny": "images/weather-icons/night.png",
     "Clear": "images/weather-icons/night.png",
@@ -90,7 +99,11 @@ forecast_iconsNight = {
     "Patchy Fog": "images/weather-icons/night-fog.png",
     "Hazy": "images/weather-icons/hazy.png"
 }
+
+#The function below determines which icons to use based on the keywords found in the NWS API's short description, and whether it is daytime or not. 
 def iconDecider(shortDescription, isDayTime):
+
+
     if isDayTime: 
         forecast_icons = forecast_iconsDay
         # print("It is day time!")
@@ -98,15 +111,19 @@ def iconDecider(shortDescription, isDayTime):
         forecast_icons = forecast_iconsNight
         # print("It is Night time!")
 
+    #If the shortDescription directly matches one of the map's keys, return that key.
     if shortDescription in forecast_icons:
         # print("Displaying icon:", forecast_icons[shortDescription])
         return forecast_icons[shortDescription]
+    
+    # If not, searches for keywords that match our map and stores those.
     else:
         keywords = []
         for keyword in forecast_icons.keys():
             if keyword.lower() in shortDescription.lower():
                 keywords.append(keyword)
 
+    # The section of code below finds the longest keyword that matches (Longest tends to be more accurate ex: partly cloudy, partly sunny rather than cloudy and sunny)
         closest_match = max(keywords, key = lambda x: len(x)) #returns length of input
         if closest_match:
             icon_filename = forecast_icons[closest_match]
@@ -115,6 +132,8 @@ def iconDecider(shortDescription, isDayTime):
             return forecast_icons[closest_match]
         else:
             print("Did not find any matching icons!", shortDescription)
+
+# The function below takes in the user's input (an address) and returns that locations latitude and longitude
 def get_location_options(address, api_key):
    
     url = f'https://maps.googleapis.com/maps/api/geocode/json?address={address}&key={api_key}'
@@ -132,16 +151,21 @@ def get_location_options(address, api_key):
     else: 
         print('Error: ', data['status'])
         return None, None
-    
+
+# The function below uses openWeatherMap locatio API to convert coordinates into either City, State or City, Country
 def convertToCity(lat,lng, locationAPI):   
         locationURL = f'http://api.openweathermap.org/geo/1.0/reverse?lat={lat}&lon={lng}&appid={locationAPI}'
         locationResponse = requests.get(locationURL)
         cityJson = locationResponse.json()
 
         if json.dumps(cityJson[0]["state"]) != "":
-            return json.dumps(cityJson[0]["name"]) +", " + json.dumps(cityJson[0]["state"])
+            
+            return json.dumps(cityJson[0]["name"]).replace('"','') +", " + json.dumps(cityJson[0]["state"]).replace('"','')
         else:
-            return json.dumps(cityJson[0]["name"]) +", " + json.dumps(cityJson[0]["country"])
+            return json.dumps(cityJson[0]["name"]).replace('"','') +", " + json.dumps(cityJson[0]["country"]).replace('"','')
+        
+
+# This function was originally used to allow the user to select hourly and daily forecast. Now the program just runs it twice (CAN OPTIMIZE)
 def selectWeatherOption(forecastType):
         weatherForecastOptions = [
             '"Forecast" ~ forecast for 12h periods over the next seven days',
@@ -151,9 +175,7 @@ def selectWeatherOption(forecastType):
         while True:
 
             counter = 1
-            # for element in weatherForecastOptions:
-            #     print(counter, element)
-            #     counter += 1
+
 
             foreCastSelect = 0
 
@@ -163,16 +185,16 @@ def selectWeatherOption(forecastType):
                 foreCastSelect = 2
             
             try:
-                # user_input = int(input("Which would you like to see? : "))
-                
                 return  int(foreCastSelect)
 
             except ValueError:
                 print("Error: Please enter a valid integer")       
 
+# This funciton uses datetime to convert the NWS API's start time to a properly formated time.
 def convertToStandardTime(time):
     # print(time)
     if time and time.strip():
+        #The 11th through 19th index in the NWS API always represents the time portion (excludes date)
         time = time[11:19]
         try:
             time_obj = datetime.strptime(time, "%H:%M:%S")
@@ -190,9 +212,10 @@ def convertToStandardTime(time):
             return ""
     else:
         return ""
-    
+# This funciton uses datetime to convert the NWS API's start time to a properly formated date.   
 def convertToStandardDate(date):
     if date and date.strip():
+        #The NWS API's starttime's date begins before the Capital 'T'
         date = date[:date.index('T'):]
         try:
             date_obj = datetime.strptime(date, "%Y-%m-%d")
@@ -203,6 +226,8 @@ def convertToStandardDate(date):
             return ""
     else:
         return ""
+
+# The function below loads each period passed in through the NWS API with the proper attributes using the functions above and reading in json input
 def loadPeriods(weatherForecast, location):
    
 
@@ -235,7 +260,8 @@ def loadPeriods(weatherForecast, location):
         periods.append(period)
     
     return periods
-    
+
+ # The following function is used to print the periods for debugging purposes   
 def printPeriods(periods):
     
     for period in periods:
@@ -245,6 +271,8 @@ def printPeriods(periods):
         print(f"{str(period.detailed_forecast)}")
         print("\n")
         print(f"Daytime or not: " + f"str{period.is_daytime}")
+
+# The following main function runs and loads all of the weather periods based on the user's address
 def main(address, forecastType):
     api_key = 'AIzaSyCzNKaGvIkGHx1LwUE32j6ua89fLIkgKPc'
     locationAPI = 'f450fc239c378750d6a35407f853899c'
@@ -257,11 +285,12 @@ def main(address, forecastType):
             if lat is not None and lng is not None: 
                 print(f'Latitiude: {lat}, Longitutde: {lng}')
 
+                # This API call gets the nearest NWS Office Location to the User's address, and converts it to a JSON 
                 officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
-        
                 officeResponse = requests.get(officeUrl)
                 officeForecast = officeResponse.json()
                 
+                # The following dictionary was created to differentiate the hourly and daily forecasts the NWS API provides
                 officeOptions = [
                 officeForecast['properties']['forecast'],
                 officeForecast['properties']['forecastHourly']
@@ -273,9 +302,8 @@ def main(address, forecastType):
                     weatherUrl = officeOptions[weatherOption - 1]
 
             
-
+                    # For both forecast times, return the respective API call and convert to JSON if succesful
                     weatherResponse = requests.get(weatherUrl)
-
                     if weatherResponse.status_code == 200:
                         weatherForecast = weatherResponse.json()
                         json_string = json.dumps(weatherForecast, indent = 4)
@@ -286,6 +314,8 @@ def main(address, forecastType):
                         #     time = convertToStandardTime(weatherForecast["startTime"])
                         #     date = convertToStandardDate(weatherForecast["startTime"])
                         # print(location)
+
+                        #Load periods based on input
                         periods = loadPeriods(weatherForecast, location)
 
                         # printPeriods(periods)

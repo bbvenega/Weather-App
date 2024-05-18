@@ -222,20 +222,19 @@ tr.headerVert {
 
 
 .dayTime {
-
+  position: absolute;
   min-height: 100vh;
   min-width: 100vw;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
   background-size: cover;
-  background-attachment: scroll;
 }
 
 .nightTime {
+  position: absolute;
   min-height: 100vh;
   min-width: 100vw;
   background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
   background-size: cover;
-  background-attachment: scroll;
   color: beige;
 
 }

@@ -48,7 +48,7 @@
                 {% for period in hourlyPeriods|slice:":25" %}
                 {% if not forloop.first %}
                 {% comment %} <td>{{ period.start_time }}</td> {% endcomment %}
-               <td> {{periods.0.is_daytime}} </td>
+               <td> {{periods.0.temperature}}{{period.temperature_unit}} </td>
                 {% endif %}
             {% endfor %}
             </tr>
@@ -69,7 +69,7 @@
                 {% if not forloop.first %}
                     <tr>
                         <tr class="header">
-                            <th colspan="2">{{ period.name }} ~ {{ period.temperature }} {{ period.temperature_unit }} ~ {{ period.short_forecast }}  
+                            <th colspan="2">{{ period.name }} ~ {{ period.temperature }}{{ period.temperature_unit }} ~ {{ period.short_forecast }}  <img src="{% static period.icon_url %}" alt="Weather Icon">
                             </th>
                         </tr>
                         <tr>
