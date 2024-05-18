@@ -262,6 +262,8 @@ def loadPeriods(weatherForecast, location):
     return periods
 
  # The following function is used to print the periods for debugging purposes   
+
+#The function below prints the period's information: used for debugging
 def printPeriods(periods):
     
     for period in periods:
@@ -283,7 +285,7 @@ def main(address, forecastType):
 
         while True:
             if lat is not None and lng is not None: 
-                print(f'Latitiude: {lat}, Longitutde: {lng}')
+                # print(f'Latitiude: {lat}, Longitutde: {lng}')
 
                 # This API call gets the nearest NWS Office Location to the User's address, and converts it to a JSON 
                 officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
