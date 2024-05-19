@@ -7,18 +7,22 @@ from datetime import datetime
 # The class below contains all the information needed per period loaded in by the National Weather Services API, Google Geolcation API, and a Coordinate to Location API
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, dewpointValue, humidityValue,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
         
         self.number = number
         self.name = name
         self.start_time = start_time
+
         self.date = date 
+
         self.end_time = end_time
         self.is_daytime = is_daytime
         self.temperature = temperature
         self.temperature_unit = temperature_unit
-        self.dewpoint = dewpoint
-        self.humidity = humidity
+        self.temperature_trend = temperature_trend
+        self.probabilityOfPreciption_Value = probabilityOfPreciption_Value 
+        self.dewpointValue = dewpointValue
+        self.humidityValue = humidityValue
         self.wind_speed = wind_speed
         self.wind_direction = wind_direction
         self.icon_url = icon_url
@@ -243,6 +247,8 @@ def loadPeriods(weatherForecast, location):
             currPeriod["isDaytime"],
             currPeriod["temperature"],
             currPeriod["temperatureUnit"],
+            currPeriod["temperatureTrend"],
+            currPeriod["probabilityOfPrecipitation"]["value"],
             currPeriod["dewpoint"]["value"],
             currPeriod["relativeHumidity"]["value"],
             currPeriod["windSpeed"],
@@ -291,6 +297,7 @@ def main(address, forecastType):
                 officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
                 officeResponse = requests.get(officeUrl)
                 officeForecast = officeResponse.json()
+                # print(officeForecast)
                 
                 # The following dictionary was created to differentiate the hourly and daily forecasts the NWS API provides
                 officeOptions = [
