@@ -17,9 +17,10 @@
     {% endblock %}
 {% block content %}
 
-<video autoplay muted loop id="myVideo">
-    <source src={%static 'images\weather-backgrounds\cloudy-night.mp4'%} type="video/mp4">
+<video autoplay muted id="myVideo">
+    <source src={% static periods.0.background_image %} type="video/mp4">
   </video>
+ <script src = "{%static 'js/background.js'%}"></script>
 {% comment %} Sets the current period's location, name temperature, and detailed forecast  {% endcomment %}
     <h2 class="header1">{{ periods.0.location }}</h2>
     <h3 class="header3">{{ periods.0.name }}</h3>

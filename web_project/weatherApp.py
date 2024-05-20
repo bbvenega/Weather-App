@@ -7,7 +7,7 @@ from datetime import datetime
 # The class below contains all the information needed per period loaded in by the National Weather Services API, Google Geolcation API, and a Coordinate to Location API
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, dewpointValue, humidityValue,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, dewpointValue, humidityValue,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, background_image, location):
         
         self.number = number
         self.name = name
@@ -29,6 +29,7 @@ class WeatherPeriod:
         self.short_forecast = short_forecast
         self.short_description = short_description
         self.detailed_forecast = detailed_forecast
+        self.background_image = background_image
         self.location = location
 
 #The function below reads in the NWS short description and shortens it further to match to most significant keywords
@@ -83,6 +84,44 @@ forecast_iconsDay = {
     "Patchy Fog": "images/weather-icons/day-fog.png",
     "Hazy": "images/weather-icons/hazy.png"
 }
+#The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
+forecast_backgroundDay = {
+    "Sunny": "images/weather-backgrounds/day-clear.mp4",
+    "Clear": "images/weather-backgrounds/day-clear.mp4",
+    "Mostly Sunny": "images/weather-backgrounds/day-clear.mp4",
+    "Partly Cloudy": "images/weather-backgrounds/day-clear.mp4",
+    "Mostly Cloudy": "images/weather-backgrounds/day-clear.mp4",
+    "Cloudy": "images/weather-backgrounds/day-clear.mp4",
+    "Foggy": "images/weather-backgrounds/day-clear.mp4",
+    "Light Rain": "images/weather-backgrounds/day-clear.mp4",
+    "Showers": "images/weather-backgrounds/day-clear.mp4",
+    "Thunderstorms": "images/weather-backgrounds/day-clear.mp4",
+    "Windy": "images/weather-backgrounds/day-clear",
+    "Snow": "images/weather-backgrounds/day-clear",
+    "Wintry Mix": "images/weather-backgrounds/day-clear.mp4",
+    "Drizzle": "images/weather-backgrounds/day-clear.mp4",
+    "Patchy Fog": "images/weather-backgrounds/day-clear.mp4",
+    "Hazy": "images/weather-backgrounds/day-clear.mp4"
+}
+#The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
+forecast_backgroundNight = {
+    "Sunny": "images/weather-backgrounds/night.mp4",
+    "Clear": "images/weather-backgrounds/night.mp4",
+    "Mostly Sunny": "images/weather-icons/day-cloudy.png",
+    "Partly Cloudy": "images/weather-icons/day-cloudy.png",
+    "Mostly Cloudy": "images/weather-icons/cloudy.png",
+    "Cloudy": "images/weather-icons/cloudy.png",
+    "Foggy": "images/weather-icons/fog.png",
+    "Light Rain": "images/weather-icons/day-rain.png",
+    "Showers": "images/weather-icons/showers.png",
+    "Thunderstorms": "images/weather-icons/day - storm.png",
+    "Windy": "images/weather-icons/windy.png",
+    "Snow": "images/weather-icons/day snow.png",
+    "Wintry Mix": "images/weather-icons/wintry-mix.png",
+    "Drizzle": "images/weather-icons/light-rain.png",
+    "Patchy Fog": "images/weather-icons/day-fog.png",
+    "Hazy": "images/weather-icons/hazy.png"
+}
 
 #The map below contains the same keywords above, and connects them to corresponding weather icons (NIGHTTIME)
 forecast_iconsNight = {
@@ -105,15 +144,24 @@ forecast_iconsNight = {
 }
 
 #The function below determines which icons to use based on the keywords found in the NWS API's short description, and whether it is daytime or not. 
-def iconDecider(shortDescription, isDayTime):
+def iconDecider(shortDescription, isDayTime, background):
 
 
-    if isDayTime: 
+    if isDayTime and background: 
+        forecast_icons = forecast_backgroundDay
+
+    elif isDayTime and not background: 
         forecast_icons = forecast_iconsDay
         # print("It is day time!")
-    else: 
-        forecast_icons = forecast_iconsNight
+
         # print("It is Night time!")
+    elif not isDayTime and background: 
+        forecast_icons = forecast_backgroundNight
+        
+        # print("It is day time!")
+    else: 
+       forecast_icons = forecast_iconsNight 
+        # print("It is day time!")
 
     #If the shortDescription directly matches one of the map's keys, return that key.
     if shortDescription in forecast_icons:
@@ -253,11 +301,12 @@ def loadPeriods(weatherForecast, location):
             currPeriod["relativeHumidity"]["value"],
             currPeriod["windSpeed"],
             currPeriod["windDirection"],
-            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"]),
+            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"], False),
             # currPeriod["icon"],
             currPeriod["shortForecast"],
             createShortDescriptions(currPeriod["shortForecast"]),
             currPeriod["detailedForecast"],
+            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"], True),
             location
         )
         
