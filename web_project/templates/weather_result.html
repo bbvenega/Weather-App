@@ -20,7 +20,7 @@
 <video autoplay muted id="myVideo">
     <source src={% static periods.0.background_image %} type="video/mp4">
   </video>
- <script src = "{%static 'js/background.js'%}"></script>
+ {% comment %} <script src = "{%static 'js/background.js'%}"></script> {% endcomment %}
 {% comment %} Sets the current period's location, name temperature, and detailed forecast  {% endcomment %}
     <h2 class="header1">{{ periods.0.location }}</h2>
     <h3 class="header3">{{ periods.0.name }}</h3>
@@ -78,7 +78,7 @@
     
     {% comment %} Collapsible 7-day forecast {% endcomment %}
     <div class="table-container">
-        <table border="0" style="background: purple; border-radius:30px;">
+        <table border="0" style="background-image: linear-gradient(to top,#2596be, #d3eaf2);border-radius: 30px;">
 
              {% for period in periods %}
                 {% if not forloop.first %}
