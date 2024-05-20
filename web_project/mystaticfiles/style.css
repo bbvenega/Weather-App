@@ -292,11 +292,22 @@ tr {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
   color: beige;
 
 }
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+
+}
+
+
 
 /* Sets image styles: currently only used for icons */
 img{
