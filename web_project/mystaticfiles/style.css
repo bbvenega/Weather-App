@@ -274,11 +274,13 @@ table, tr, td, th {
   /* border-collapse:collapse; */
   /* display: none; */
   text-align: center;
+  border-bottom: .5px solid #c9c9c9;
 }
 
 tr.header {
   cursor:pointer;
   display: table-row;
+  /* text-align: left; */
 }
 tr {
   display: none;
@@ -305,7 +307,6 @@ tr {
   background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
   color: beige;
-
 }
 
 #myVideo {

@@ -105,13 +105,13 @@ forecast_backgroundDay = {
 }
 #The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
 forecast_backgroundNight = {
-    "Sunny": "images/weather-backgrounds/night.mp4",
-    "Clear": "images/weather-backgrounds/night.mp4",
-    "Mostly Sunny": "images/weather-icons/day-cloudy.png",
-    "Partly Cloudy": "images/weather-icons/day-cloudy.png",
-    "Mostly Cloudy": "images/weather-icons/cloudy.png",
-    "Cloudy": "images/weather-icons/cloudy.png",
-    "Foggy": "images/weather-icons/fog.png",
+    "Sunny": "images/weather-backgrounds/night-clear.mp4",
+    "Clear": "images/weather-backgrounds/night-clear2.mp4",
+    "Mostly Sunny": "images/weather-backgrounds/night-clear.mp4",
+    "Partly Cloudy": "images/weather-backgrounds/cloudy-night.mp4",
+    "Mostly Cloudy": "images/weather-backgrounds/cloudy-night.mp4.png",
+    "Cloudy": "images/weather-backgrounds/cloudy-night.mp4",
+    "Foggy": "images/weather-backgrounds/cloudy-night.mp4",
     "Light Rain": "images/weather-icons/day-rain.png",
     "Showers": "images/weather-icons/showers.png",
     "Thunderstorms": "images/weather-icons/day - storm.png",

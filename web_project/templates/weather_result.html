@@ -17,7 +17,7 @@
     {% endblock %}
 {% block content %}
 
-<video autoplay muted id="myVideo">
+<video autoplay muted loop id="myVideo">
     <source src={% static periods.0.background_image %} type="video/mp4">
   </video>
  {% comment %} <script src = "{%static 'js/background.js'%}"></script> {% endcomment %}
@@ -34,7 +34,11 @@
 
 {% comment %} The hourly table is displayed below {% endcomment %}
     <div class="table-container" style= "max-width: unset; margin-top: 400px">
+        {%if not periods.0.is_day_time%}
+        <div class = "table-scroll" style="background-image: linear-gradient(to bottom,#0e1533, #4f4069)">
+        {% else %}
         <div class = "table-scroll">
+        {%endif%}
     <table>
         <thead>
         <tr class = "headerVert">
@@ -78,14 +82,22 @@
     
     {% comment %} Collapsible 7-day forecast {% endcomment %}
     <div class="table-container">
-        <table border="0" style="background-image: linear-gradient(to top,#2596be, #d3eaf2);border-radius: 30px;">
-
+        
+        {%if periods.0.is_daytime%} 
+        <table border="0" style="background-image: linear-gradient(to bottom,#2596be, #d3eaf2);border-radius: 30px; max-width: 75%;">
+        {%else%} 
+        <table border="0" style="background-image: linear-gradient(to bottom,#0e1533, #4f4069);border-radius: 30px;max-width: 75%;">
+        {%endif%}
+        <tr class = "header"> 
+            <th>7 Day Forecast </th>
+         </tr>
              {% for period in periods %}
                 {% if not forloop.first %}
                     <tr>
                         <tr class="header">
                             {% comment %} Outer row {% endcomment %}
-                            <th colspan="2">{{ period.name }} <img src="{% static period.icon_url %}" alt="Weather Icon"> {{ period.temperature }}° 
+                            
+                            <th colspan="2">{{ period.name }} {{ period.temperature }}° <img src="{% static period.icon_url %}" alt="Weather Icon">  
                             </th>
                         </tr>
                         <tr>
