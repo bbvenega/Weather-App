@@ -77,7 +77,7 @@ input[type=text] {
   }
 
 input[type=text]:focus {
-    width: 75%;
+    width: 50%;
   }
 
 
@@ -90,7 +90,7 @@ input[type=text]:focus {
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     padding: 20px;
     width: 300px;
     transition: all 0.5s;
@@ -274,7 +274,7 @@ table, tr, td, th {
   /* border-collapse:collapse; */
   /* display: none; */
   text-align: center;
-  border-bottom: .5px solid #c9c9c9;
+  /* border-bottom: .5px solid #c9c9c9; */
 }
 
 tr.header {
@@ -348,6 +348,11 @@ html, body {
     /* background-color: pink; */
 
 } 
+.bodyBG {
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}
 
 body {
   background-size: cover; /* Cover the entire viewport */

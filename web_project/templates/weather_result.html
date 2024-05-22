@@ -6,7 +6,7 @@
 
 
 {% comment %} Sets page dayTime or NightTime setting based on current period {% endcomment %}
-{% block body_class %}
+{% block body_class%}
     {% if periods.0.is_daytime %}
         dayTime
 
@@ -14,12 +14,16 @@
         nightTime
 
     {% endif %}
+   
     {% endblock %}
-{% block content %}
 
-<video autoplay muted loop id="myVideo">
+    {%block body_style%}
+    background-image: url('{% static periods.0.background_image %}')
+    {%endblock%}
+    {% block content %}
+{% comment %} <video autoplay muted loop id="myVideo">
     <source src={% static periods.0.background_image %} type="video/mp4">
-  </video>
+  </video> {% endcomment %}
  {% comment %} <script src = "{%static 'js/background.js'%}"></script> {% endcomment %}
 {% comment %} Sets the current period's location, name temperature, and detailed forecast  {% endcomment %}
     <h2 class="header1">{{ periods.0.location }}</h2>
@@ -81,7 +85,7 @@
 
     
     {% comment %} Collapsible 7-day forecast {% endcomment %}
-    <div class="table-container">
+    <div class="table-container" style = "max-width: 100vw; width: 100%">
         
         {%if periods.0.is_daytime%} 
         <table border="0" style="background-image: linear-gradient(to bottom,#2596be, #d3eaf2);border-radius: 30px; max-width: 75%;">
@@ -102,8 +106,13 @@
                         </tr>
                         <tr>
                             {% comment %} Inner info {% endcomment %}
-                            <td> Wind Direction: {{period.wind_direction}}</td>
+                            
+                            <td> Chance of precipitation: {{period.probabilityOfPreciption_Value}}{%if period.probabilityOfPreciption_Value is not None%}%
+                                {%endif%}
+                            </td>
+                            
                         </tr>
+                        <tr> <td> {{periods.0.detailed_forecast}} </td> </tr>
                     </tr>
  
                 {% endif %}
@@ -112,6 +121,6 @@
 
     </div>
 </div>
-
+</div>
 {% endblock %}
 

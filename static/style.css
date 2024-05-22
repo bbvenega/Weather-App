@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 
 /* The following animation causes a fade in effect */
@@ -21,6 +21,15 @@ transform: scale(100%);
 transform: scale(100%);
 }
 
+}
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
 }
 
 
@@ -53,7 +62,7 @@ button {
 
 /* The code below sets the animated user text input box */
 input[type=text] {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
    text-align: center;
     width: 50%;
   box-sizing: border-box;
@@ -68,20 +77,20 @@ input[type=text] {
   }
 
 input[type=text]:focus {
-    width: 75%;
+    width: 50%;
   }
 
 
 /* The CSS Styling below sets the animated "Get Weather Button" on homepage */
 .button {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     display: inline-block;
     border-radius: 12px;
     background-color: lightblue;
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     padding: 20px;
     width: 300px;
     transition: all 0.5s;
@@ -116,7 +125,7 @@ input[type=text]:focus {
 
 /* The CSS styling below sets the select menu on the homepage */
 select {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     color: #FFFFFF;
     width: 10%;
     padding: 16px 20px;
@@ -221,9 +230,8 @@ select {
   table-layout: fixed;
   border-spacing: 70vh;
   border-collapse: separate;
-  background: purple;
+  background-image: linear-gradient(to bottom,#2596be, #d3eaf2);
   border-radius: 30px;
-
 }
 
 .table-scroll thead th { 
@@ -264,11 +272,15 @@ table, tr, td, th {
   /* font-size: smaller; */
   /* border: 1px solid black; */
   /* border-collapse:collapse; */
+  /* display: none; */
   text-align: center;
+  /* border-bottom: .5px solid #c9c9c9; */
 }
+
 tr.header {
   cursor:pointer;
   display: table-row;
+  /* text-align: left; */
 }
 tr {
   display: none;
@@ -295,7 +307,6 @@ tr {
   background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
   color: beige;
-
 }
 
 #myVideo {
@@ -304,6 +315,7 @@ tr {
   bottom: 0;
   min-width: 100vw;
   min-height: 100vh;
+  animation: fadeAnimation 5s linear;
 
 }
 
@@ -325,7 +337,7 @@ html, body {
   animation: fadeAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     height: 100%;
     margin: 0;
     padding: 0;
@@ -336,6 +348,11 @@ html, body {
     /* background-color: pink; */
 
 } 
+.bodyBG {
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}
 
 body {
   background-size: cover; /* Cover the entire viewport */
