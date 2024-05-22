@@ -29,7 +29,7 @@
     <h2 class="header1">{{ periods.0.location }}</h2>
     <h3 class="header3">{{ periods.0.name }}</h3>
     <h4 class="header4">{{ periods.0.temperature }}°</h4>
-    <h5 class="header5">{{ periods.0.short_forecast }}
+    <h5 class="header5">{{ periods.0.detailed_forecast }}
        {% comment %} Hourly periods:  {{hourlyPeriods.0.start_time}} {% endcomment %}
     </h5>
     {% comment %} <h6 class = "header6"> {{periods.0.detailed_forecast}} </h6> {% endcomment %}
@@ -46,7 +46,7 @@
     <table>
         <thead>
         <tr class = "headerVert">
-            <th colspan="25"> {{periods.0.detailed_forecast}} </th>
+            <th colspan="25"> Hourly Forecast </th>
         </tr>
     </thead>
 
@@ -85,7 +85,7 @@
 
     
     {% comment %} Collapsible 7-day forecast {% endcomment %}
-    <div class="table-container" style = "max-width: 100vw; width: 100%">
+    <div class="table-container" style = "max-width: 100vw; width: 100%; padding: 50px">
         
         {%if periods.0.is_daytime%} 
         <table border="0" style="background-image: linear-gradient(to bottom,#2596be, #d3eaf2);border-radius: 30px; max-width: 75%;">
