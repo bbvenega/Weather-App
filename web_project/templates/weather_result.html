@@ -21,6 +21,18 @@
     background-image: url('{% static periods.0.background_image %}')
     {%endblock%}
     {% block content %}
+
+    <form method="post" action="{% url 'weather_result' %}">
+        {% csrf_token %}
+        <div class = "form-container">
+            <input type="text" id="address" name="address" style="background: content-box;border: currentColor;text-align: left;" placeholder="🔍">
+        
+
+    
+        {% comment %} <button class="button" style="vertical-align:middle"><span>Get The Weather</span></button> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+    </form>
+</div>
 {% comment %} <video autoplay muted loop id="myVideo">
     <source src={% static periods.0.background_image %} type="video/mp4">
   </video> {% endcomment %}

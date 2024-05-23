@@ -86,41 +86,39 @@ forecast_iconsDay = {
 }
 #The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
 forecast_backgroundDay = {
-    "Sunny": "images/weather-backgrounds/day-clear.mp4",
-    "Clear": "images/weather-backgrounds/day-clear.mp4",
-    "Mostly Sunny": "images/weather-backgrounds/day-clear.mp4",
-    "Partly Cloudy": "images/weather-backgrounds/day-clear.mp4",
-    "Mostly Cloudy": "images/weather-backgrounds/day-clear.mp4",
-    "Cloudy": "images/weather-backgrounds/day-clear.mp4",
-    "Foggy": "images/weather-backgrounds/day-clear.mp4",
-    "Light Rain": "images/weather-backgrounds/day-clear.mp4",
-    "Showers": "images/weather-backgrounds/day-clear.mp4",
-    "Thunderstorms": "images/weather-backgrounds/day-clear.mp4",
-    "Windy": "images/weather-backgrounds/day-clear",
-    "Snow": "images/weather-backgrounds/day-clear",
-    "Wintry Mix": "images/weather-backgrounds/day-clear.mp4",
-    "Drizzle": "images/weather-backgrounds/day-clear.mp4",
-    "Patchy Fog": "images/weather-backgrounds/day-clear.mp4",
-    "Hazy": "images/weather-backgrounds/day-clear.mp4"
+    "Sunny": "images/weather-backgrounds/day/day-clear.jpg",
+    "Clear": "images/weather-backgrounds/day/day-clear.jpg",
+    "Mostly Sunny": "images/weather-backgrounds/day/day-clear.jpg",
+    "Partly Cloudy": "images/weather-backgrounds/day/day-partly_cloudy.jpg",
+    "Mostly Cloudy": "images/weather-backgrounds/day/mostly_cloudy.jpg",
+    "Cloudy": "images/weather-backgrounds/day/day-cloudy.jpg",
+    "Foggy": "images/weather-backgrounds/day/day-foggy.jpg",
+    "Light Rain": "images/weather-backgrounds/day/day-rainy.jpg",
+    "Showers": "images/weather-backgrounds/day/day-showers.jpg",
+    "Thunderstorms": "images/weather-backgrounds/day/day-thunderstorm.jpg",
+    "Windy": "images/weather-backgrounds/day/day-windy.jpg",
+    "Snow": "images/weather-backgrounds/day/day-snow",
+    "Wintry Mix": "images/weather-backgrounds/day/day-wintrymix.jpg",
+    "Drizzle": "images/weather-backgrounds/day/day-drizzle.jpg",
+    "Patchy Fog": "images/weather-backgrounds/day/day-clear.jpg",
+    "Hazy": "images/weather-backgrounds/day/day-clear.jpg"
 }
 #The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
 forecast_backgroundNight = {
-    "Sunny": "images/weather-backgrounds/night-clear.jpg",
-    "Clear": "images/weather-backgrounds/night-clear2.jpg",
-    "Mostly Sunny": "images/weather-backgrounds/night-clear.mp4",
-    "Partly Cloudy": "images/weather-backgrounds/cloudy-night.mp4",
-    "Mostly Cloudy": "images/weather-backgrounds/cloudy-night.mp4.png",
-    "Cloudy": "images/weather-backgrounds/cloudy-night.mp4",
-    "Foggy": "images/weather-backgrounds/cloudy-night.mp4",
-    "Light Rain": "images/weather-icons/day-rain.png",
-    "Showers": "images/weather-icons/showers.png",
-    "Thunderstorms": "images/weather-icons/day - storm.png",
-    "Windy": "images/weather-icons/windy.png",
-    "Snow": "images/weather-icons/day snow.png",
-    "Wintry Mix": "images/weather-icons/wintry-mix.png",
-    "Drizzle": "images/weather-icons/light-rain.png",
-    "Patchy Fog": "images/weather-icons/day-fog.png",
-    "Hazy": "images/weather-icons/hazy.png"
+    "Clear": "images/weather-backgrounds/night/night-clear2.jpg",
+    "Partly Cloudy": "images/weather-backgrounds/night/night-partly_cloudy.jpg",
+    "Mostly Cloudy": "images/weather-backgrounds/night/night-mostly_cloudy.jpg",
+    "Cloudy": "images/weather-backgrounds/night/night-cloudy.jpg",
+    "Foggy": "images/weather-backgrounds/night/night-foggy.jpg",
+    "Light Rain": "images/weather-backgrounds/night/night-rain.jpg",
+    "Showers": "images/weather-backgrounds/night/night-showers.jpg",
+    "Thunderstorms": "images/weather-backgrounds/night/night-thunderstorm.jpg",
+    "Windy": "images/weather-backgrounds/night/night-windy.jpg",
+    "Snow": "images/weather-backgrounds/night/night-snow.jpg",
+    "Wintry Mix": "images/weather-backgrounds/night/night-wintry-mix.jpg",
+    "Drizzle": "images/weather-backgrounds/night/night-rain.jpg",
+    "Patchy Fog": "images/weather-backgrounds/night/night-patchy_fog.jpg",
+    "Hazy": "images/weather-backgrounds/night/night-hazy.jpg"
 }
 
 #The map below contains the same keywords above, and connects them to corresponding weather icons (NIGHTTIME)
