@@ -301,7 +301,6 @@ tr {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
   background-size: cover;
 }
 
@@ -310,7 +309,6 @@ tr {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
   color: beige;
 }
@@ -337,7 +335,7 @@ img{
 /* Sets the overall arching properties for the html and body of the webpage */
 html, body {
   display: flex;
-  background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
+  url('{% static "images\weather-backgrounds\home.jpg" %}');
   background-size: cover;
   background-attachment: scroll;
   animation: fadeAnimation 10s  linear;

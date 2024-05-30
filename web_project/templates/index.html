@@ -1,5 +1,6 @@
 {% extends 'base.html'%}
-{%block content%}
+{%load static%}
+
 <!DOCTYPE html>
 
 
@@ -15,7 +16,12 @@
 
 </head>
 <body>
-
+    {%block body_style%}
+        background-image: url('{% static "images\weather-backgrounds\home.jpg" %}');
+        width: 100vw;
+        height: 100vh;
+    {%endblock%}
+    {%block content%}
     <div class = "centered-text">
     <h1>Thunder Talk ⛈️</h1>
     <form method="post" action="{% url 'weather_result' %}">
