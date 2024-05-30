@@ -335,7 +335,7 @@ img{
 /* Sets the overall arching properties for the html and body of the webpage */
 html, body {
   display: flex;
-  url('{% static "images\weather-backgrounds\home.jpg" %}');
+  /* url('{% static "images\weather-backgrounds\home.jpg" %}'); */
   background-size: cover;
   background-attachment: scroll;
   animation: fadeAnimation 10s  linear;
