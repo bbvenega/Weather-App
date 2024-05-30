@@ -6,30 +6,61 @@
 
 
 {% comment %} Sets page dayTime or NightTime setting based on current period {% endcomment %}
-{% block body_class %}
+{% block body_class%}
     {% if periods.0.is_daytime %}
         dayTime
+
     {% else %}
         nightTime
+
     {% endif %}
+   
     {% endblock %}
-{% block content %}
 
+    {%block body_style%}
+    background-image: url('{% static periods.0.background_image %}')
+    {%endblock%}
+    {% block content %}
 
+    <form method="post" action="{% url 'weather_result' %}">
+        {% csrf_token %}
+        <div class = "form-container">
+            <input type="text" id="address" name="address" style="background: content-box;border: currentColor;text-align: left;" placeholder="🔍">
+        
+
+    
+        {% comment %} <button class="button" style="vertical-align:middle"><span>Get The Weather</span></button> {% endcomment %}
+    {% comment %} </div> {% endcomment %}
+    </form>
+</div>
+{% comment %} <video autoplay muted loop id="myVideo">
+    <source src={% static periods.0.background_image %} type="video/mp4">
+  </video> {% endcomment %}
+ {% comment %} <script src = "{%static 'js/background.js'%}"></script> {% endcomment %}
 {% comment %} Sets the current period's location, name temperature, and detailed forecast  {% endcomment %}
     <h2 class="header1">{{ periods.0.location }}</h2>
     <h3 class="header3">{{ periods.0.name }}</h3>
-    <h4 class="header4">{{ periods.0.temperature }}{{ periods.0.temperature_unit }}</h4>
+    <h4 class="header4">{{ periods.0.temperature }}°</h4>
     <h5 class="header5">{{ periods.0.detailed_forecast }}
-       Hourly periods:  {{hourlyPeriods.0.start_time}}
+       {% comment %} Hourly periods:  {{hourlyPeriods.0.start_time}} {% endcomment %}
     </h5>
+    {% comment %} <h6 class = "header6"> {{periods.0.detailed_forecast}} </h6> {% endcomment %}
 
 
 
 {% comment %} The hourly table is displayed below {% endcomment %}
     <div class="table-container" style= "max-width: unset; margin-top: 400px">
+        {%if not periods.0.is_day_time%}
+        <div class = "table-scroll" style="background-image: linear-gradient(to bottom,#0e1533, #4f4069)">
+        {% else %}
         <div class = "table-scroll">
+        {%endif%}
     <table>
+        <thead>
+        <tr class = "headerVert">
+            <th colspan="25"> Hourly Forecast </th>
+        </tr>
+    </thead>
 
         {% comment %} Row for short_forecast {% endcomment %}
         <tr class="headerVert">
@@ -56,7 +87,7 @@
                 {% for period in hourlyPeriods|slice:":25" %}
                 {% if not forloop.first %}
                 {% comment %} <td>{{ period.start_time }}</td> {% endcomment %}
-               <td> {{periods.0.temperature}}{{period.temperature_unit}} </td>
+               <td> {{periods.0.temperature}}° </td>
                 {% endif %}
             {% endfor %}
             </tr>
@@ -66,21 +97,34 @@
 
     
     {% comment %} Collapsible 7-day forecast {% endcomment %}
-    <div class="table-container">
-        <table border="0">
-
+    <div class="table-container" style = "max-width: 100vw; width: 100%; padding: 50px">
+        
+        {%if periods.0.is_daytime%} 
+        <table border="0" style="background-image: linear-gradient(to bottom,#2596be, #d3eaf2);border-radius: 30px; max-width: 75%;">
+        {%else%} 
+        <table border="0" style="background-image: linear-gradient(to bottom,#0e1533, #4f4069);border-radius: 30px;max-width: 75%;">
+        {%endif%}
+        <tr class = "header"> 
+            <th>7 Day Forecast </th>
+         </tr>
              {% for period in periods %}
                 {% if not forloop.first %}
                     <tr>
                         <tr class="header">
                             {% comment %} Outer row {% endcomment %}
-                            <th colspan="2">{{ period.name }} ~ {{ period.temperature }}{{ period.temperature_unit }} ~ {{ period.short_forecast }}  <img src="{% static period.icon_url %}" alt="Weather Icon">
+                            
+                            <th colspan="2">{{ period.name }} {{ period.temperature }}° <img src="{% static period.icon_url %}" alt="Weather Icon">  
                             </th>
                         </tr>
                         <tr>
                             {% comment %} Inner info {% endcomment %}
-                            <td> Wind Direction: {{period.wind_direction}}</td>
+                            
+                            <td> Chance of precipitation: {{period.probabilityOfPreciption_Value}}{%if period.probabilityOfPreciption_Value is not None%}%
+                                {%endif%}
+                            </td>
+                            
                         </tr>
+                        <tr> <td> {{periods.0.detailed_forecast}} </td> </tr>
                     </tr>
  
                 {% endif %}
@@ -89,6 +133,6 @@
 
     </div>
 </div>
-
+</div>
 {% endblock %}
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 
 /* The following animation causes a fade in effect */
@@ -23,6 +23,15 @@ transform: scale(100%);
 
 }
 
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
 
 
 .container {
@@ -36,6 +45,12 @@ transform: scale(100%);
     margin-top: 20px;
 }
 
+.form-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 10px;
+}
 .centered-text {
   text-align: center;
 }
@@ -53,7 +68,7 @@ button {
 
 /* The code below sets the animated user text input box */
 input[type=text] {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
    text-align: center;
     width: 50%;
   box-sizing: border-box;
@@ -68,20 +83,20 @@ input[type=text] {
   }
 
 input[type=text]:focus {
-    width: 75%;
+    width: 80%;
   }
 
 
 /* The CSS Styling below sets the animated "Get Weather Button" on homepage */
 .button {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     display: inline-block;
     border-radius: 12px;
     background-color: lightblue;
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     padding: 20px;
     width: 300px;
     transition: all 0.5s;
@@ -116,7 +131,7 @@ input[type=text]:focus {
 
 /* The CSS styling below sets the select menu on the homepage */
 select {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     color: #FFFFFF;
     width: 10%;
     padding: 16px 20px;
@@ -135,7 +150,7 @@ select {
     position: absolute;
     top: 0px;
     text-align: center;
-   margin-top: 10px;
+   margin-top: 40px;
    margin-bottom: 0px;
    max-width: 100%;
    width: auto;
@@ -158,7 +173,7 @@ select {
   position: absolute;
   top: 0px;
   text-align: center;
- margin-top: 180px;
+ margin-top: 100px;
  margin-bottom: 0px;
  max-width: 100%;
  width: auto;
@@ -169,22 +184,33 @@ select {
   position: absolute;
   top: 0px;
   text-align: center;
- margin-top: 225px;
+ margin-top: 150px;
  font-size: 95px;
  margin-bottom: 0px;
  max-width: 100%;
  width: auto;
 }
 
-/* Current Period Description */
+/* Short Description */
 .header5 {
+  position: absolute;
+  top: 0px;
+  text-align: center;
+ margin-top: 275px;
+ margin-bottom: 0px;
+
+ max-width: 100%;
+ width: auto;
+}
+
+/* Current Period Description */
+.header6 {
   position: absolute;
   top: 0px;
   text-align: center;
  margin-top: 345px;
  margin-bottom: 0px;
-
- max-width: 100%;
+ max-width: 50%;
  width: auto;
 }
 
@@ -199,6 +225,8 @@ select {
   text-align: center;
   top: 0;
   margin-top: 550px;
+  border-collapse: separate;
+  border-radius: 30px;
 }
 
 .table-scroll{
@@ -207,10 +235,15 @@ select {
   max-width: 50%;
   table-layout: fixed;
   border-spacing: 70vh;
-  border: 5px solid black;
-
-
+  border-collapse: separate;
+  background-image: linear-gradient(to bottom,#2596be, #d3eaf2);
+  border-radius: 30px;
 }
+
+.table-scroll thead th { 
+  position: sticky; 
+  top: 0; 
+} 
 
 .cellPadding {
   padding-left: 50px;
@@ -245,11 +278,15 @@ table, tr, td, th {
   /* font-size: smaller; */
   /* border: 1px solid black; */
   /* border-collapse:collapse; */
+  /* display: none; */
   text-align: center;
+  /* border-bottom: .5px solid #c9c9c9; */
 }
+
 tr.header {
   cursor:pointer;
   display: table-row;
+  /* text-align: left; */
 }
 tr {
   display: none;
@@ -273,11 +310,22 @@ tr {
   position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
   color: beige;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  animation: fadeAnimation 5s linear;
 
 }
+
+
 
 /* Sets image styles: currently only used for icons */
 img{
@@ -295,7 +343,7 @@ html, body {
   animation: fadeAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     height: 100%;
     margin: 0;
     padding: 0;
@@ -306,6 +354,11 @@ html, body {
     /* background-color: pink; */
 
 } 
+.bodyBG {
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}
 
 body {
   background-size: cover; /* Cover the entire viewport */

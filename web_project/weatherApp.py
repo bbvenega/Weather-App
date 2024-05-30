@@ -7,24 +7,29 @@ from datetime import datetime
 # The class below contains all the information needed per period loaded in by the National Weather Services API, Google Geolcation API, and a Coordinate to Location API
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature, temperature_unit, dewpoint, humidity,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, dewpointValue, humidityValue,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, background_image, location):
         
         self.number = number
         self.name = name
         self.start_time = start_time
+
         self.date = date 
+
         self.end_time = end_time
         self.is_daytime = is_daytime
         self.temperature = temperature
         self.temperature_unit = temperature_unit
-        self.dewpoint = dewpoint
-        self.humidity = humidity
+        self.temperature_trend = temperature_trend
+        self.probabilityOfPreciption_Value = probabilityOfPreciption_Value 
+        self.dewpointValue = dewpointValue
+        self.humidityValue = humidityValue
         self.wind_speed = wind_speed
         self.wind_direction = wind_direction
         self.icon_url = icon_url
         self.short_forecast = short_forecast
         self.short_description = short_description
         self.detailed_forecast = detailed_forecast
+        self.background_image = background_image
         self.location = location
 
 #The function below reads in the NWS short description and shortens it further to match to most significant keywords
@@ -79,6 +84,42 @@ forecast_iconsDay = {
     "Patchy Fog": "images/weather-icons/day-fog.png",
     "Hazy": "images/weather-icons/hazy.png"
 }
+#The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
+forecast_backgroundDay = {
+    "Sunny": "images/weather-backgrounds/day/day-clear.jpg",
+    "Clear": "images/weather-backgrounds/day/day-clear.jpg",
+    "Mostly Sunny": "images/weather-backgrounds/day/day-clear.jpg",
+    "Partly Cloudy": "images/weather-backgrounds/day/day-partly_cloudy.jpg",
+    "Mostly Cloudy": "images/weather-backgrounds/day/mostly_cloudy.jpg",
+    "Cloudy": "images/weather-backgrounds/day/day-cloudy.jpg",
+    "Foggy": "images/weather-backgrounds/day/day-foggy.jpg",
+    "Light Rain": "images/weather-backgrounds/day/day-rainy.jpg",
+    "Showers": "images/weather-backgrounds/day/day-showers.jpg",
+    "Thunderstorms": "images/weather-backgrounds/day/day-thunderstorm.jpg",
+    "Windy": "images/weather-backgrounds/day/day-windy.jpg",
+    "Snow": "images/weather-backgrounds/day/day-snow",
+    "Wintry Mix": "images/weather-backgrounds/day/day-wintrymix.jpg",
+    "Drizzle": "images/weather-backgrounds/day/day-drizzle.jpg",
+    "Patchy Fog": "images/weather-backgrounds/day/day-clear.jpg",
+    "Hazy": "images/weather-backgrounds/day/day-clear.jpg"
+}
+#The map below contains the same keywords above, and connects them to corresponding weather icons (DAYTIME)
+forecast_backgroundNight = {
+    "Clear": "images/weather-backgrounds/night/night-clear2.jpg",
+    "Partly Cloudy": "images/weather-backgrounds/night/night-partly_cloudy.jpg",
+    "Mostly Cloudy": "images/weather-backgrounds/night/night-mostly_cloudy.jpg",
+    "Cloudy": "images/weather-backgrounds/night/night-cloudy.jpg",
+    "Foggy": "images/weather-backgrounds/night/night-foggy.jpg",
+    "Light Rain": "images/weather-backgrounds/night/night-rain.jpg",
+    "Showers": "images/weather-backgrounds/night/night-showers.jpg",
+    "Thunderstorms": "images/weather-backgrounds/night/night-thunderstorm.jpg",
+    "Windy": "images/weather-backgrounds/night/night-windy.jpg",
+    "Snow": "images/weather-backgrounds/night/night-snow.jpg",
+    "Wintry Mix": "images/weather-backgrounds/night/night-wintry-mix.jpg",
+    "Drizzle": "images/weather-backgrounds/night/night-rain.jpg",
+    "Patchy Fog": "images/weather-backgrounds/night/night-patchy_fog.jpg",
+    "Hazy": "images/weather-backgrounds/night/night-hazy.jpg"
+}
 
 #The map below contains the same keywords above, and connects them to corresponding weather icons (NIGHTTIME)
 forecast_iconsNight = {
@@ -101,15 +142,24 @@ forecast_iconsNight = {
 }
 
 #The function below determines which icons to use based on the keywords found in the NWS API's short description, and whether it is daytime or not. 
-def iconDecider(shortDescription, isDayTime):
+def iconDecider(shortDescription, isDayTime, background):
 
 
-    if isDayTime: 
+    if isDayTime and background: 
+        forecast_icons = forecast_backgroundDay
+
+    elif isDayTime and not background: 
         forecast_icons = forecast_iconsDay
         # print("It is day time!")
-    else: 
-        forecast_icons = forecast_iconsNight
+
         # print("It is Night time!")
+    elif not isDayTime and background: 
+        forecast_icons = forecast_backgroundNight
+        
+        # print("It is day time!")
+    else: 
+       forecast_icons = forecast_iconsNight 
+        # print("It is day time!")
 
     #If the shortDescription directly matches one of the map's keys, return that key.
     if shortDescription in forecast_icons:
@@ -243,15 +293,18 @@ def loadPeriods(weatherForecast, location):
             currPeriod["isDaytime"],
             currPeriod["temperature"],
             currPeriod["temperatureUnit"],
+            currPeriod["temperatureTrend"],
+            currPeriod["probabilityOfPrecipitation"]["value"],
             currPeriod["dewpoint"]["value"],
             currPeriod["relativeHumidity"]["value"],
             currPeriod["windSpeed"],
             currPeriod["windDirection"],
-            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"]),
+            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"], False),
             # currPeriod["icon"],
             currPeriod["shortForecast"],
             createShortDescriptions(currPeriod["shortForecast"]),
             currPeriod["detailedForecast"],
+            iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"], True),
             location
         )
         
@@ -291,6 +344,7 @@ def main(address, forecastType):
                 officeUrl = f'https://api.weather.gov/points/{lat},{lng}'
                 officeResponse = requests.get(officeUrl)
                 officeForecast = officeResponse.json()
+                # print(officeForecast)
                 
                 # The following dictionary was created to differentiate the hourly and daily forecasts the NWS API provides
                 officeOptions = [

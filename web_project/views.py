@@ -10,7 +10,7 @@ def index(request):
 def weather_result(request):
     if request.method == 'POST':
         address = request.POST.get('address')
-        forecast_type = request.POST.get('forecast_type')
+        forecast_type = 'daily'
         if address and forecast_type: 
             periods = main(address, forecast_type)
             hourlyPeriods = main(address, 2)

@@ -1,6 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
-@keyframes gradientAnimation {
+
+/* The following animation causes a fade in effect */
+@keyframes fadeAnimation {
   0% {
     opacity:0;
 transform: scale(100%);
@@ -20,6 +22,17 @@ transform: scale(100%);
 }
 
 }
+
+@keyframes fadeInAnimation {
+  0% {
+      opacity: 0;
+  }
+  100% {
+      opacity: 1;
+  }
+}
+
+
 
 .container {
     display: flex;
@@ -46,8 +59,10 @@ button {
     margin: 10px auto;
 }
 
+
+/* The code below sets the animated user text input box */
 input[type=text] {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
    text-align: center;
     width: 50%;
   box-sizing: border-box;
@@ -62,18 +77,20 @@ input[type=text] {
   }
 
 input[type=text]:focus {
-    width: 75%;
+    width: 50%;
   }
 
+
+/* The CSS Styling below sets the animated "Get Weather Button" on homepage */
 .button {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     display: inline-block;
     border-radius: 12px;
     background-color: lightblue;
     border: none;
     color: #FFFFFF;
     text-align: center;
-    font-size: 28px;
+    font-size: 26px;
     padding: 20px;
     width: 300px;
     transition: all 0.5s;
@@ -106,8 +123,9 @@ input[type=text]:focus {
     right: 0;
   }
 
+/* The CSS styling below sets the select menu on the homepage */
 select {
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     color: #FFFFFF;
     width: 10%;
     padding: 16px 20px;
@@ -118,17 +136,22 @@ select {
 
 
 
+
+/* The custom Header classes below are used to properly align and organize the weather forecast output page neatly */
+
+/* Locaiton */
   .header1 {
     position: absolute;
     top: 0px;
     text-align: center;
-   margin-top: 10px;
+   margin-top: 40px;
    margin-bottom: 0px;
    max-width: 100%;
    width: auto;
  
 }
 
+/* NOR BEING USED */
 .header2 {
   position: absolute;
   top: 0px;
@@ -139,50 +162,53 @@ select {
  width: auto;
 }
 
+/* Current Period */
 .header3 {
   position: absolute;
   top: 0px;
   text-align: center;
- margin-top: 180px;
+ margin-top: 100px;
  margin-bottom: 0px;
  max-width: 100%;
  width: auto;
 }
+
+/* Current Temperature */
 .header4 {
   position: absolute;
   top: 0px;
   text-align: center;
- margin-top: 225px;
+ margin-top: 150px;
  font-size: 95px;
  margin-bottom: 0px;
  max-width: 100%;
  width: auto;
 }
 
+/* Short Description */
 .header5 {
   position: absolute;
   top: 0px;
   text-align: center;
- margin-top: 345px;
+ margin-top: 275px;
  margin-bottom: 0px;
 
  max-width: 100%;
  width: auto;
 }
 
-
-table.tableHeaderVert {
-
-  color: pink;
-  overflow: scroll;
-  display: contents;
-  width: 50vh;
+/* Current Period Description */
+.header6 {
   position: absolute;
-  margin: 0;
-  margin-top: 25vh;
+  top: 0px;
+  text-align: center;
+ margin-top: 345px;
+ margin-bottom: 0px;
+ max-width: 50%;
+ width: auto;
 }
 
-
+/* .table-container is used to format both tables presented on weather-result page */
 .table-container {
   max-width: 100vh;
   position: absolute;
@@ -193,20 +219,42 @@ table.tableHeaderVert {
   text-align: center;
   top: 0;
   margin-top: 550px;
+  border-collapse: separate;
+  border-radius: 30px;
 }
 
-table, tr, td, th {
-  /* font-size: smaller; */
-  /* border: 1px solid black; */
-  /* border-collapse:collapse; */
-  text-align: center;
+.table-scroll{
+  height: 150px;
+  overflow: auto;
+  max-width: 50%;
+  table-layout: fixed;
+  border-spacing: 70vh;
+  border-collapse: separate;
+  background-image: linear-gradient(to bottom,#2596be, #d3eaf2);
+  border-radius: 30px;
 }
-tr.header {
-  cursor:pointer;
-  display: table-row;
+
+.table-scroll thead th { 
+  position: sticky; 
+  top: 0; 
+} 
+
+.cellPadding {
+  padding-left: 50px;
+  padding-right: 50px;
+  white-space: nowrap;
+
 }
-tr {
-  display: none;
+/* Table Header Vert is used to format and style the hourly forecast */
+table.tableHeaderVert {
+
+  color: pink;
+  overflow: scroll;
+  display: contents;
+  width: 50vh;
+  position: absolute;
+  margin: 0;
+  margin-top: 25vh;
 }
 
 tr.headerVert {
@@ -219,41 +267,77 @@ tr.headerVert {
 }
 
 
+/* The regular table, tr, td, and th are currently used to style the 7-day forecast */ 
+table, tr, td, th {
+  /* font-size: smaller; */
+  /* border: 1px solid black; */
+  /* border-collapse:collapse; */
+  /* display: none; */
+  text-align: center;
+  /* border-bottom: .5px solid #c9c9c9; */
+}
+
+tr.header {
+  cursor:pointer;
+  display: table-row;
+  /* text-align: left; */
+}
+tr {
+  display: none;
+}
 
 
+
+
+
+/* Customizes to Day Time when the current period is Day */
 .dayTime {
-
+  position: absolute;
   min-height: 100vh;
   min-width: 100vw;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
   background-size: cover;
-  background-attachment: scroll;
 }
 
+/* Customizes to Night Time when the current period is Night */
 .nightTime {
+  position: absolute;
   min-height: 100vh;
   min-width: 100vw;
-  background-image: linear-gradient(to bottom, #283e9b, #161b30) ; 
+  background-image: linear-gradient(to bottom, #212f6a, #0f152e) ; 
   background-size: cover;
-  background-attachment: scroll;
   color: beige;
+}
+
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  animation: fadeAnimation 5s linear;
 
 }
 
+
+
+/* Sets image styles: currently only used for icons */
 img{
   max-width: 50%;
   max-height: 50%;
 }
 
+
+/* Sets the overall arching properties for the html and body of the webpage */
 html, body {
   display: flex;
   background-image: linear-gradient(to bottom, #eaffa3, #c5f2fc) ; 
   background-size: cover;
   background-attachment: scroll;
-  animation: gradientAnimation 10s  linear;
+  animation: fadeAnimation 10s  linear;
     font-size: xx-large;
     color: #4f4a4d;
-    font-family: "Poetsen One";
+    font-family: "Quicksand";
     height: 100%;
     margin: 0;
     padding: 0;
@@ -264,9 +348,13 @@ html, body {
     /* background-color: pink; */
 
 } 
+.bodyBG {
+  background-size: cover; /* Cover the entire viewport */
+  background-repeat: no-repeat;
+  background-attachment: fixed; /* Keep the background fixed while scrolling */
+}
 
 body {
-  background-image: url('your-background-image.jpg');
   background-size: cover; /* Cover the entire viewport */
   background-repeat: no-repeat;
   background-attachment: fixed; /* Keep the background fixed while scrolling */
