@@ -302,6 +302,7 @@ tr {
   min-height: 100vh;
   min-width: 100vw;
   background-size: cover;
+  color: black;
 }
 
 /* Customizes to Night Time when the current period is Night */

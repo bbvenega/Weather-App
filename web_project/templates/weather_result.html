@@ -9,10 +9,8 @@
 {% block body_class%}
     {% if periods.0.is_daytime %}
         dayTime
-
     {% else %}
         nightTime
-
     {% endif %}
    
     {% endblock %}
@@ -50,10 +48,10 @@
 
 {% comment %} The hourly table is displayed below {% endcomment %}
     <div class="table-container" style= "max-width: unset; margin-top: 400px">
-        {%if not periods.0.is_day_time%}
+        {%if periods.0.is_day_time%}
         <div class = "table-scroll" style="background-image: linear-gradient(to bottom,#0e1533, #4f4069)">
         {% else %}
-        <div class = "table-scroll">
+        <div class = "table-scroll"; style="background-image: linear-gradient(to bottom,#2596be, #d3eaf2) ">
         {%endif%}
     <table>
         <thead>

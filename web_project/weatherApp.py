@@ -7,22 +7,18 @@ from datetime import datetime
 # The class below contains all the information needed per period loaded in by the National Weather Services API, Google Geolcation API, and a Coordinate to Location API
 
 class WeatherPeriod:
-    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, dewpointValue, humidityValue,wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, background_image, location):
+    def __init__(self, number, name, start_time, date, end_time, is_daytime, temperature ,temperature_unit,  temperature_trend, probabilityOfPreciption_Value, wind_speed, wind_direction, icon_url, short_forecast, short_description, detailed_forecast, background_image, location):
         
         self.number = number
         self.name = name
         self.start_time = start_time
-
         self.date = date 
-
         self.end_time = end_time
         self.is_daytime = is_daytime
         self.temperature = temperature
         self.temperature_unit = temperature_unit
         self.temperature_trend = temperature_trend
         self.probabilityOfPreciption_Value = probabilityOfPreciption_Value 
-        self.dewpointValue = dewpointValue
-        self.humidityValue = humidityValue
         self.wind_speed = wind_speed
         self.wind_direction = wind_direction
         self.icon_url = icon_url
@@ -144,7 +140,7 @@ forecast_iconsNight = {
 #The function below determines which icons to use based on the keywords found in the NWS API's short description, and whether it is daytime or not. 
 def iconDecider(shortDescription, isDayTime, background):
 
-
+    print("Is it day time: ", isDayTime)
     if isDayTime and background: 
         forecast_icons = forecast_backgroundDay
 
@@ -170,6 +166,8 @@ def iconDecider(shortDescription, isDayTime, background):
     else:
         keywords = []
         for keyword in forecast_icons.keys():
+            # print("Keyword: ", keyword)
+            # print("Short Description: ", shortDescription)
             if keyword.lower() in shortDescription.lower():
                 keywords.append(keyword)
 
@@ -295,8 +293,6 @@ def loadPeriods(weatherForecast, location):
             currPeriod["temperatureUnit"],
             currPeriod["temperatureTrend"],
             currPeriod["probabilityOfPrecipitation"]["value"],
-            currPeriod["dewpoint"]["value"],
-            currPeriod["relativeHumidity"]["value"],
             currPeriod["windSpeed"],
             currPeriod["windDirection"],
             iconDecider(currPeriod["shortForecast"], currPeriod["isDaytime"], False),
@@ -309,7 +305,7 @@ def loadPeriods(weatherForecast, location):
         )
         
         
-
+        # print(period.icon_url)
         periods.append(period)
     
     return periods
@@ -363,7 +359,7 @@ def main(address, forecastType):
                     if weatherResponse.status_code == 200:
                         weatherForecast = weatherResponse.json()
                         json_string = json.dumps(weatherForecast, indent = 4)
-                        # print(json_string)
+                        print(json_string)
                         location = convertToCity(lat, lng, locationAPI)
                         # if weatherForecast["startTime"]:
                         #     print(weatherForecast["startTime"])
