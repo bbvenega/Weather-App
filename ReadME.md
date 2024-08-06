@@ -6,6 +6,19 @@ Project Overview
 
 Thunder Talk was created to explore the Python programming language and the Django framework. Prior to this project, I had limited experience with CSS, HTML, Python, and Django. Through this project, I built a fully functional weather app from scratch, showcasing my ability to learn and apply new technologies.
 Technical Stack
+
+## Site 🖥️
+### Homepage
+![homepage](https://github.com/user-attachments/assets/085c9d71-d841-48cc-bf8d-085ff73a6ecb)
+
+
+ ### Daytime Result
+![Daytime](https://github.com/user-attachments/assets/9ee84352-0ae7-4274-ae27-9ba029b1298c)
+
+### Nighttime Result
+![Nighttime](https://github.com/user-attachments/assets/bcc9856f-19ed-4f04-ac9e-b4adfd16aef9)
+
+
 ## Tools Used ⚒️
 ### APIs
 * Google's GeoLocation API: For accurate location tracking.
